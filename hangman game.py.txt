@@ -1,0 +1,106 @@
+
+import random
+
+#Create Hangman ascii list
+hangman = ['''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========''', r'''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========''', r'''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========''', r'''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+=========''']
+
+#Create list of Words
+words = ["cake","station","mause"]
+
+# Ask the PC to get random word
+random_word = random.choice(words)
+
+# Replace random word with spaces
+display = ["-"]*len(random_word)
+
+# Create lives and guessed latter list
+lives = 6
+guessed_letters = []
+
+# Print the staring of the game "display list and first hangman form"
+print("".join(display))
+print(hangman[0])
+
+# ask the user to guess + adding while loop
+while "-" in display and lives > 0:
+  guess = input("Please guess a letter: ").lower()
+
+  # check if the choice in guessed letter or not 
+  if guess in guessed_letters:
+    print("You've Already chose this latter before")
+    print(f"You still have {lives} more trails")
+    continue
+
+  # Add the new choice to the guessed before
+  guessed_letters.append(guess)
+
+  # Check if the user's guess right or not
+  if guess not in random_word:
+    lives -= 1
+    print(hangman[6-lives])
+
+  else:
+    for position in range(len(random_word)):
+      if random_word[position] == guess:
+        display[position] = guess
+
+  print("".join(display))
+  print(f"You have {lives} more trails")
+
+# Check Why we reach here
+if lives == 0:
+  print("You Lose")
+  print(hangman[-1])
+else:
+  print("You Won!")
+  print("🏆🏅")
+
